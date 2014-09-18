@@ -32,10 +32,6 @@ public class MainActivity extends FragmentActivity
 
     public static final String TAG = MainActivity.class.getSimpleName();
 
-    private static final int FRAGMENT_ACTIVITIES = 0;
-
-    private static final int FRAGMENT_SPOTS = 1;
-
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */

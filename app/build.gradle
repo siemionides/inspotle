@@ -27,6 +27,8 @@ dependencies {
     compile 'com.android.support:support-v4:20.0.0'
     compile 'pl.mg6.hrisey:hrisey:0.3.1'
     compile 'de.greenrobot:eventbus:2.2.+'
+    compile 'com.google.android.gms:play-services:5.0.+'
+
 
 
 }

@@ -21,6 +21,7 @@ import com.siemionczyk.inspotle.model.Activity;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
+import hrisey.Preferences;
 
 /**
  * Created by michalsiemionczyk on 18/09/14.
@@ -53,7 +54,9 @@ public class ActivitiesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_activities, container, false);
 
-        gridView = (GridView) rootView.findViewById(R.id.gridView1);
+        if (gridView == null){
+            gridView = (GridView) rootView.findViewById(R.id.gridView1);
+        }
 
         InspotleApiClient.getInstance().getActivities();
 

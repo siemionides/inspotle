@@ -3,6 +3,7 @@
 
     <string name="app_name">Inspotle</string>
     <string name="facebook_app_id">721526254602308</string>
+    <string name="google_maps_api_key">AIzaSyCNXXm18lsifPipPFE0W8Z1vFWPDAJzvw0</string>
 
     <string name="title_section1">Activities</string>
     <string name="title_section2">Spots</string>
