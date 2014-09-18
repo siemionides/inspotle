@@ -1,22 +1,24 @@
 package com.siemionczyk.inspotle;
 
-import android.app.Activity;
-
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
+import android.widget.Toast;
+
+import com.facebook.Request;
+import com.facebook.Response;
+import com.facebook.Session;
+import com.facebook.SessionState;
+import com.facebook.model.GraphUser;
 
 
 public class MainActivity extends Activity
@@ -45,6 +47,48 @@ public class MainActivity extends Activity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        performFacebookLogin();
+
+    }
+
+    private void performFacebookLogin() {
+        Session.openActiveSession(this, true, new Session.StatusCallback() {
+            @Override
+            public void call(Session session, SessionState state, Exception exception) {
+
+                if (session.isOpened()) {
+                    requestUsersDetails(session);
+                }
+            }
+        });
+    }
+
+    private void requestUsersDetails(Session session) {
+        // make request to the /me API
+        Request.newMeRequest(session, new Request.GraphUserCallback() {
+
+            // callback after Graph API response with user object
+            @Override
+            public void onCompleted(GraphUser user, Response response) {
+                if (user != null) {
+                    welcomeUser(user.getName() + ", " + user.getId() + ", ");
+                }
+
+            }
+        }).executeAsync();
+    }
+
+    private void welcomeUser(String s) {
+        Toast.makeText(this, "from facebook: " + s, Toast.LENGTH_LONG).show();
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+
     }
 
     @Override
@@ -130,7 +174,7 @@ public class MainActivity extends Activity
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             return rootView;
         }
