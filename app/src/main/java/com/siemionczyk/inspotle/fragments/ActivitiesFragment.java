@@ -32,7 +32,6 @@ public class ActivitiesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_activities, container, false);
 
-
         initializeGrid(rootView);
 
         return rootView;
@@ -62,31 +61,45 @@ public class ActivitiesFragment extends Fragment {
             this.mobileValues = arrayEmpty;
         }
 
+
         public View getView(int position, View convertView, ViewGroup parent) {
 
+            if (position == 0) {
+                int a = 5;
+            }
+            ViewHolderItem viewHolder;
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            LinearLayout cellItem;
 
             if (convertView == null) {
 
                 // get layout from text_item.xml
-                cellItem = (LinearLayout) inflater.inflate(R.layout.text_item, null);
+                convertView = inflater.inflate(R.layout.text_item, parent, false);
+//                int parentHeight = parent.getHeight();
 
-                int parentHeight = parent.getHeight();
-                cellItem.setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.MATCH_PARENT, parentHeight / 3));
+                convertView.setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.MATCH_PARENT, getItemHeight()));
 
-                // set value into textview
-                TextView textView = (TextView) cellItem
+                viewHolder = new ViewHolderItem();
+                viewHolder.textViewItem = (TextView) convertView
                         .findViewById(R.id.grid_item_label);
-                textView.setText(mobileValues[position]);
+
+                convertView.setTag(viewHolder);
 
             } else {
-                cellItem = (LinearLayout) convertView;
+                viewHolder = (ViewHolderItem) convertView.getTag();
             }
+            // set value into textview
+            viewHolder.textViewItem.setText(mobileValues[position]);
 
-            return cellItem;
+            return convertView;
+        }
+
+
+        private int getItemHeight() {
+            final float scale = context.getResources().getDisplayMetrics().density;
+            int dps = (int) context.getResources().getDimension(R.dimen.activity_cell_height);
+            int pixels = (int) (dps * scale + 0.5f);
+            return pixels;
         }
 
         @Override
@@ -103,6 +116,12 @@ public class ActivitiesFragment extends Fragment {
         public long getItemId(int position) {
             return 0;
         }
+    }
+
+    static class ViewHolderItem {
+        TextView textViewItem;
+        LinearLayout linearLayout;
+
     }
 
 
