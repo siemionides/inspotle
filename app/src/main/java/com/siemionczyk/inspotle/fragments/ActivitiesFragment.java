@@ -10,42 +10,69 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.siemionczyk.inspotle.R;
+import com.siemionczyk.inspotle.api.InspotleApiClient;
+import com.siemionczyk.inspotle.events.ActivitiesResponseEvent;
+import com.siemionczyk.inspotle.model.Activity;
+
+import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by michalsiemionczyk on 18/09/14.
  */
 public class ActivitiesFragment extends Fragment {
 
-    static final String[] numbers = new String[]{
-            "Koszykówka", "Siatkówka", "Badmington",
-            "Piłka nożna", "Tenis", "Dwa ognie",
-            "Hokej", "Karate", "Taekwondo",
-            "Hokej", "Karate", "Taekwondo"
-    };
+//    static final String[] numbers = new String[]{
+//            "Koszykówka", "Siatkówka", "Badmington",
+//            "Piłka nożna", "Tenis", "Dwa ognie",
+//            "Hokej", "Karate", "Taekwondo",
+//            "Hokej", "Karate", "Taekwondo"
+//    };
+
+    GridView gridView;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_activities, container, false);
 
-        initializeGrid(rootView);
+        gridView = (GridView) rootView.findViewById(R.id.gridView1);
+
+        InspotleApiClient.getInstance().getActivities();
 
         return rootView;
     }
 
-    private void initializeGrid(View rootView) {
-        GridView gridView = (GridView) rootView.findViewById(R.id.gridView1);
-        gridView.setAdapter(new MyGridAdapter(getActivity(), numbers));
+
+    @SuppressWarnings("unused")
+    public void onEvent(ActivitiesResponseEvent event) {
+        populateGrid(event.getActivities());
+    }
+
+    private void populateGrid(final List<Activity> activities) {
+        gridView.setAdapter(new MyGridAdapter(getActivity(), activities));
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-
                 Toast.makeText(getActivity(),
-                        numbers[position], Toast.LENGTH_SHORT).show();
+                        activities.get(position).getName(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -54,19 +81,15 @@ public class ActivitiesFragment extends Fragment {
     public class MyGridAdapter extends BaseAdapter {
 
         private Context context;
-        private String[] mobileValues;
+        private List<Activity> activities;
 
-        public MyGridAdapter(Context context, String[] arrayEmpty) {
+        public MyGridAdapter(Context context, List<Activity> activities) {
             this.context = context;
-            this.mobileValues = arrayEmpty;
+            this.activities = activities;
         }
 
 
         public View getView(int position, View convertView, ViewGroup parent) {
-
-            if (position == 0) {
-                int a = 5;
-            }
             ViewHolderItem viewHolder;
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -89,7 +112,7 @@ public class ActivitiesFragment extends Fragment {
                 viewHolder = (ViewHolderItem) convertView.getTag();
             }
             // set value into textview
-            viewHolder.textViewItem.setText(mobileValues[position]);
+            viewHolder.textViewItem.setText(activities.get(position).getName());
 
             return convertView;
         }
@@ -104,7 +127,7 @@ public class ActivitiesFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return mobileValues.length;
+            return activities.size();
         }
 
         @Override
@@ -120,8 +143,6 @@ public class ActivitiesFragment extends Fragment {
 
     static class ViewHolderItem {
         TextView textViewItem;
-        LinearLayout linearLayout;
-
     }
 
 
