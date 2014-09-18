@@ -7,6 +7,7 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +25,7 @@ import com.facebook.model.GraphUser;
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
+    public static final String TAG = MainActivity.class.getSimpleName();
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -58,13 +60,14 @@ public class MainActivity extends Activity
             public void call(Session session, SessionState state, Exception exception) {
 
                 if (session.isOpened()) {
+
                     requestUsersDetails(session);
                 }
             }
         });
     }
 
-    private void requestUsersDetails(Session session) {
+    private void requestUsersDetails(final Session session) {
         // make request to the /me API
         Request.newMeRequest(session, new Request.GraphUserCallback() {
 
@@ -72,6 +75,10 @@ public class MainActivity extends Activity
             @Override
             public void onCompleted(GraphUser user, Response response) {
                 if (user != null) {
+                    String accessToken = session.getAccessToken();
+                    String userId = user.getId();
+                    Log.d(TAG, accessToken + " " + userId );
+
                     welcomeUser(user.getName() + ", " + user.getId() + ", ");
                 }
 
