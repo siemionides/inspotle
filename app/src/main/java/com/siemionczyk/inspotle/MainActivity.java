@@ -21,6 +21,9 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -51,16 +54,19 @@ public class MainActivity extends Activity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         performFacebookLogin();
-
     }
 
+
     private void performFacebookLogin() {
-        Session.openActiveSession(this, true, new Session.StatusCallback() {
+        List<String> permissions = new ArrayList<String>();
+        permissions.add("email");
+
+        Log.d(TAG, "active Session: " + Session.getActiveSession());
+
+        Session.openActiveSession(this, true, permissions, new Session.StatusCallback() {
             @Override
             public void call(Session session, SessionState state, Exception exception) {
-
                 if (session.isOpened()) {
-
                     requestUsersDetails(session);
                 }
             }
@@ -75,11 +81,9 @@ public class MainActivity extends Activity
             @Override
             public void onCompleted(GraphUser user, Response response) {
                 if (user != null) {
-                    String accessToken = session.getAccessToken();
-                    String userId = user.getId();
-                    Log.d(TAG, accessToken + " " + userId );
-
-                    welcomeUser(user.getName() + ", " + user.getId() + ", ");
+                    welcomeUser(user.getName() + ", " + user.getId() + ", " + user.asMap().get("email").toString());
+                } else {
+                    Log.d(TAG, "User is null!");
                 }
 
             }
@@ -95,7 +99,6 @@ public class MainActivity extends Activity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
-
     }
 
     @Override
@@ -150,8 +153,17 @@ public class MainActivity extends Activity
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_sign_out) {
+            Toast.makeText(this, "sign out!", Toast.LENGTH_SHORT).show();
+            signOut();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void signOut() {
+        Session.openActiveSessionFromCache(getApplicationContext())
+                .closeAndClearTokenInformation();
+        finish();
     }
 
     /**
