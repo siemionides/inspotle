@@ -6,8 +6,10 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.siemionczyk.inspotle.events.ActivitiesResponseEvent;
+import com.siemionczyk.inspotle.events.SpotsResponseEvent;
 import com.siemionczyk.inspotle.model.Activities;
 import com.siemionczyk.inspotle.model.Activity;
+import com.siemionczyk.inspotle.model.Spots;
 
 import java.util.List;
 
@@ -71,6 +73,25 @@ public final class InspotleApiClient {
 
             }
         });
+    }
+
+
+    public void getSpots(){
+        api.getSpots(new Callback<Spots>() {
+            @Override
+            public void success(Spots spots, Response response) {
+                Log.d(TAG, "success");
+                EventBus.getDefault().post( new SpotsResponseEvent(spots.getSpots()));
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(TAG, "failure:" + error.getMessage());
+
+            }
+        });
+
     }
 
 

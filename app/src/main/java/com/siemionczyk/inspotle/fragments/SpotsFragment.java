@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import com.siemionczyk.inspotle.R;
 import com.siemionczyk.inspotle.utils.ViewUtils;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Created by michalsiemionczyk on 18/09/14.
  */
@@ -18,6 +20,8 @@ public class SpotsFragment extends Fragment {
     Fragment spotsMapFragment = new SpotsMapFragment();
 
     Fragment spotsListFragment = new SpotsListFragment();
+
+
 
 
     @Override
