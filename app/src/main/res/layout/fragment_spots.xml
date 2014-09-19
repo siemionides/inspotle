@@ -3,27 +3,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity$PlaceholderFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:orientation="horizontal">
 
-        <Button
+
+
+
+        <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:id="@+id/tab_map"
-            android:layout_height="wrap_content"
-            android:text="Map" />
+            android:background="@color/tab_background_pressed"
+            android:gravity="center"
+            android:textColor="@color/text_color"
+            android:layout_height="match_parent"
+            android:text="@string/tab_map_name" />
 
-        <Button
+        <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:id="@+id/tab_list"
-            android:layout_height="wrap_content"
-            android:text="List" />
+            android:background="@color/tab_background_not_pressed"
+            android:gravity="center"
+            android:textColor="@color/text_color"
+            android:layout_height="match_parent"
+            android:text="@string/tab_list_name" />
 
 
     </LinearLayout>

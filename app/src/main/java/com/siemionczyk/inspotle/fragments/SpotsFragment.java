@@ -12,8 +12,6 @@ import android.view.ViewGroup;
 import com.siemionczyk.inspotle.R;
 import com.siemionczyk.inspotle.utils.ViewUtils;
 
-import de.greenrobot.event.EventBus;
-
 /**
  * Created by michalsiemionczyk on 18/09/14.
  */
@@ -32,13 +30,18 @@ public class SpotsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_spots, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_spots, container, false);
 
 //        initializeFragments();
 
         ViewUtils.setOnClickListener(rootView, R.id.tab_map, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                changeTabsBackgroudColor(
+                        ViewUtils.findView(rootView, R.id.tab_map),
+                        ViewUtils.findView(rootView, R.id.tab_list)
+                );
                 replaceFragment(spotsMapFragment, TAG_MAP);
             }
         });
@@ -46,6 +49,10 @@ public class SpotsFragment extends Fragment {
         ViewUtils.setOnClickListener(rootView, R.id.tab_list, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                changeTabsBackgroudColor(
+                        ViewUtils.findView(rootView, R.id.tab_list),
+                        ViewUtils.findView(rootView, R.id.tab_map)
+                );
                 replaceFragment(spotsListFragment, TAG_LIST);
             }
         });
@@ -53,6 +60,11 @@ public class SpotsFragment extends Fragment {
         replaceFragment(spotsMapFragment, TAG_MAP);
 
         return rootView;
+    }
+
+    private void changeTabsBackgroudColor(View activeTab, View nonActiveTAb) {
+        activeTab.setBackgroundColor(getResources().getColor(R.color.tab_background_pressed));
+        nonActiveTAb.setBackgroundColor(getResources().getColor(R.color.tab_background_not_pressed));
     }
 
     private void initializeFragments() {
