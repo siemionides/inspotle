@@ -1,7 +1,9 @@
 package com.siemionczyk.inspotle.api;
 
-import com.siemionczyk.inspotle.model.Activities;
-import com.siemionczyk.inspotle.model.Spots;
+import com.siemionczyk.inspotle.model.Activity;
+import com.siemionczyk.inspotle.model.Spot;
+
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.http.GET;
@@ -13,9 +15,9 @@ public interface InspotleApi {
 
 
     @GET("/activities.json")
-    void getActivities(Callback<Activities> callback);
+    void getActivities(Callback<List<Activity>> callback);
 
     @GET("/spots.json")
-    void getSpots(Callback<Spots> callback);
+    void getSpots(Callback<List<Spot>> callback);
 
 }

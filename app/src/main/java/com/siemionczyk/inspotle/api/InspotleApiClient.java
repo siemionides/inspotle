@@ -7,9 +7,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.siemionczyk.inspotle.events.ActivitiesResponseEvent;
 import com.siemionczyk.inspotle.events.SpotsResponseEvent;
-import com.siemionczyk.inspotle.model.Activities;
 import com.siemionczyk.inspotle.model.Activity;
-import com.siemionczyk.inspotle.model.Spots;
+import com.siemionczyk.inspotle.model.Spot;
 
 import java.util.List;
 
@@ -60,11 +59,11 @@ public final class InspotleApiClient {
 
 
     public void getActivities(){
-        api.getActivities(new Callback<Activities>() {
+        api.getActivities(new Callback<List<Activity>>() {
             @Override
-            public void success(Activities activities, Response response) {
+            public void success(List<Activity> activities, Response response) {
                 Log.d(TAG, "success");
-                EventBus.getDefault().post( new ActivitiesResponseEvent(activities.getActivities()));
+                EventBus.getDefault().post( new ActivitiesResponseEvent(activities));
             }
 
             @Override
@@ -77,11 +76,11 @@ public final class InspotleApiClient {
 
 
     public void getSpots(){
-        api.getSpots(new Callback<Spots>() {
+        api.getSpots(new Callback<List<Spot>>() {
             @Override
-            public void success(Spots spots, Response response) {
+            public void success(List<Spot> spots, Response response) {
                 Log.d(TAG, "success");
-                EventBus.getDefault().post( new SpotsResponseEvent(spots.getSpots()));
+                EventBus.getDefault().post( new SpotsResponseEvent(spots));
 
             }
 

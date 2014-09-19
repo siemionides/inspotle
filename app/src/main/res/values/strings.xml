@@ -13,4 +13,10 @@
     <string name="action_settings">Settings</string>
     <string name="action_sign_out">Sign out</string>
 
+    <plurals name="numberOfEvents">
+        <item quantity="zero">0 events</item>
+        <item quantity="one">%d event</item>
+        <item quantity="other">%d events</item>
+    </plurals>
+
 </resources>

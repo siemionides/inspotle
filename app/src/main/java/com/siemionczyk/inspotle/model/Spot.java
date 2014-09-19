@@ -2,6 +2,8 @@ package com.siemionczyk.inspotle.model;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.List;
+
 import lombok.Value;
 
 /**
@@ -19,6 +21,7 @@ public class Spot {
     String post_code;
     String city;
     String country;
+    List<Event> events;
 
 
     public LatLng getLatLng(){

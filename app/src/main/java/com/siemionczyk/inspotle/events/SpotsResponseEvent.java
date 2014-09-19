@@ -1,7 +1,6 @@
 package com.siemionczyk.inspotle.events;
 
 import com.siemionczyk.inspotle.model.Spot;
-import com.siemionczyk.inspotle.model.Spots;
 
 import java.util.List;
 
