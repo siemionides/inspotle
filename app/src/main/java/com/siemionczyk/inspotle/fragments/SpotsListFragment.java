@@ -1,5 +1,6 @@
 package com.siemionczyk.inspotle.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.siemionczyk.inspotle.R;
+import com.siemionczyk.inspotle.SingleSpotActivity;
 import com.siemionczyk.inspotle.adapters.SpotsAdapter;
 import com.siemionczyk.inspotle.api.InspotleApiClient;
 import com.siemionczyk.inspotle.events.SpotsResponseEvent;
@@ -69,8 +71,17 @@ public class SpotsListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Spot spot = (Spot) parent.getItemAtPosition(position);
-                Toast.makeText(getActivity(), "Clicked on:" + spot.getName(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Clicked on:" + spot.getName(), Toast.LENGTH_SHORT).show();
+                launchSingleSpotActivity(spot);
             }
         });
     }
+
+    private void launchSingleSpotActivity(Spot spot){
+        Intent intent = new Intent(getActivity(), SingleSpotActivity.class);
+        intent.putExtra(SingleSpotActivity.BUNDLE_SPOT_KEY, spot);
+        startActivity(intent);
+    }
+
+
 }

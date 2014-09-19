@@ -87,7 +87,6 @@ public class SpotsMapFragment extends Fragment {
                     .title(spot.getName()));
         }
 
-
         LatLng latLngOfLast =
                 getLatLngOfLast(event.getSpots());
 

@@ -1,0 +1,112 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity$PlaceholderFragment">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:id="@+id/map_container"/>
+
+    <TextView
+        android:id="@+id/tv_spot_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextH1"
+        android:text="OSIR Wola"
+        />
+
+    <View
+        android:layout_height="1dp"
+        android:layout_width="match_parent"
+        android:background="@drawable/black_border"
+        />
+
+    <TextView
+        android:id="@+id/tv_spot_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextH3"
+        android:text="Grzybowska 3, Warszawa, 22 788 72 88"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_lock_lock" />
+
+            <TextView
+                android:layout_gravity="center"
+                android:id="@+id/tv_distance_from"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0,5 mile away" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_lock_lock" />
+
+            <TextView
+                android:layout_gravity="center"
+                android:id="@+id/tv_events_nr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2 events" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:id="@+id/tv_short_description"
+        android:text="Jeden z ładniejszych parków w Warszawie"/>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="Show more information"
+        style="@style/TextBlue"
+        />
+
+
+
+
+</LinearLayout>

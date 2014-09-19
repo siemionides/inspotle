@@ -1,12 +1,14 @@
 package com.siemionczyk.inspotle.model;
 
+import hrisey.Parcelable;
 import lombok.Value;
 
 /**
  * Created by michalsiemionczyk on 18/09/14.
  */
 @Value
-public class Activity {
+@Parcelable
+public class Activity implements android.os.Parcelable {
 
     int id;
     String name;

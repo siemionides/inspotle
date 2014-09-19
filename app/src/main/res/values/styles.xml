@@ -5,4 +5,17 @@
         <!-- Customize your theme here. -->
     </style>
 
+
+    <style name="TextH1">
+        <item name="android:textSize">25sp</item>
+    </style>
+
+    <style name="TextH3">
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="TextBlue">
+        <item name="android:textColor">@color/text_link_color</item>
+    </style>
+
 </resources>

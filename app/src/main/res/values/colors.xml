@@ -4,6 +4,8 @@
     <color name="tab_background_not_pressed">#383F48</color>
     <color name="tab_background_pressed">#6DC0FA</color>
     <color name="text_color">#FFFFFF</color>
+    <color name="text_link_color">#6AAAE6</color>
+
 
 
 </resources>

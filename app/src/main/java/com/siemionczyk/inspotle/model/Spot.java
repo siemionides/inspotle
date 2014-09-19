@@ -4,13 +4,15 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
+import hrisey.Parcelable;
 import lombok.Value;
 
 /**
  * Created by michalsiemionczyk on 19/09/14.
  */
 @Value
-public class Spot {
+@Parcelable
+public class Spot implements android.os.Parcelable {
     int id;
     String name;
     String latitude;
