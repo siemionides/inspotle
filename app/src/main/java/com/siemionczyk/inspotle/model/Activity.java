@@ -12,5 +12,6 @@ public class Activity implements android.os.Parcelable {
 
     int id;
     String name;
-    String icon_url;
+    String icon_white_url;
+    String icon_blue_url;
 }

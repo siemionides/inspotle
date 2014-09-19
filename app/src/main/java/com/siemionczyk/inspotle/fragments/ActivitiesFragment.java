@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,11 +18,11 @@ import com.siemionczyk.inspotle.R;
 import com.siemionczyk.inspotle.api.InspotleApiClient;
 import com.siemionczyk.inspotle.events.ActivitiesResponseEvent;
 import com.siemionczyk.inspotle.model.Activity;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
-import hrisey.Preferences;
 
 /**
  * Created by michalsiemionczyk on 18/09/14.
@@ -54,7 +55,7 @@ public class ActivitiesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_activities, container, false);
 
-        if (gridView == null){
+        if (gridView == null) {
             gridView = (GridView) rootView.findViewById(R.id.gridView1);
         }
 
@@ -109,13 +110,19 @@ public class ActivitiesFragment extends Fragment {
                 viewHolder.textViewItem = (TextView) convertView
                         .findViewById(R.id.grid_item_label);
 
+                viewHolder.imageView = (ImageView) convertView.findViewById(R.id.iv_icon);
+
                 convertView.setTag(viewHolder);
 
             } else {
                 viewHolder = (ViewHolderItem) convertView.getTag();
             }
             // set value into textview
-            viewHolder.textViewItem.setText(activities.get(position).getName());
+            Activity activity = activities.get(position);
+
+            viewHolder.textViewItem.setText(activity.getName());
+            Picasso.with(context).load(activity.getIcon_blue_url()).into(viewHolder.imageView);
+
 
             return convertView;
         }
@@ -146,6 +153,7 @@ public class ActivitiesFragment extends Fragment {
 
     static class ViewHolderItem {
         TextView textViewItem;
+        ImageView imageView;
     }
 
 

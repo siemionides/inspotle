@@ -58,7 +58,7 @@ public class MainActivity extends FragmentActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
 
-        performFacebookLogin();
+//        performFacebookLogin();
     }
 
 

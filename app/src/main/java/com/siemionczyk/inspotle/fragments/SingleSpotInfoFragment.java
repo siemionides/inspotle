@@ -1,5 +1,6 @@
 package com.siemionczyk.inspotle.fragments;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.siemionczyk.inspotle.R;
 import com.siemionczyk.inspotle.SingleSpotActivity;
 import com.siemionczyk.inspotle.model.Spot;
@@ -48,8 +51,19 @@ public class SingleSpotInfoFragment extends Fragment {
         ViewUtils.setText(spot.getName(), rootView, R.id.tv_spot_name);
         ViewUtils.setText(spot.getAddress1() + " " + spot.getAddress2(), rootView, R.id.tv_spot_address);
         ViewUtils.setText(spot.getLatitude() + " " + spot.getLongitude(), rootView, R.id.tv_distance_from);
-        ViewUtils.setText("" + spot.getEvents().size(), rootView, R.id.tv_events_nr);
+        ViewUtils.setText(getNrEvents(spot.getEvents().size()), rootView, R.id.tv_events_nr);
         ViewUtils.setText(spot.getShort_description(), rootView, R.id.tv_short_description);
 
+
+//        Marker marker = mMapFragment.getMap().addMarker(new MarkerOptions()
+//                .position(spot.getLatLng())
+//                .snippet(spot.getShort_description())
+//                .title(spot.getName()));
+
+    }
+
+    private String getNrEvents(int nrEvents){
+        Resources res = getActivity().getResources();
+        return res.getQuantityString(R.plurals.numberOfEvents, nrEvents, nrEvents);
     }
 }
