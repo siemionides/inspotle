@@ -102,8 +102,6 @@ public class ActivitiesFragment extends Fragment {
 
                 // get layout from text_item.xml
                 convertView = inflater.inflate(R.layout.text_item, parent, false);
-//                int parentHeight = parent.getHeight();
-
                 convertView.setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.MATCH_PARENT, getItemHeight()));
 
                 viewHolder = new ViewHolderItem();
@@ -117,14 +115,16 @@ public class ActivitiesFragment extends Fragment {
             } else {
                 viewHolder = (ViewHolderItem) convertView.getTag();
             }
-            // set value into textview
-            Activity activity = activities.get(position);
 
-            viewHolder.textViewItem.setText(activity.getName());
-            Picasso.with(context).load(activity.getIcon_blue_url()).into(viewHolder.imageView);
-
-
+            bindViews(activities.get(position), viewHolder);
             return convertView;
+        }
+
+        private void bindViews(Activity activity, ViewHolderItem viewHolder) {
+            String activityName = activity.getName().toUpperCase();
+
+            viewHolder.textViewItem.setText(activityName);
+            Picasso.with(context).load(activity.getIcon_blue_url()).into(viewHolder.imageView);
         }
 
 

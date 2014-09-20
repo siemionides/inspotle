@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="tab_background_not_pressed">#383F48</color>
-    <color name="tab_background_pressed">#6DC0FA</color>
+    <color name="button_not_pressed">#383F48</color>
+    <color name="button_pressed">#6DC0FA</color>
+
     <color name="text_color">#FFFFFF</color>
     <color name="text_link_color">#6AAAE6</color>
 
-
-
+    <color name="activitie_item_border_color">#3E4751</color>
 </resources>

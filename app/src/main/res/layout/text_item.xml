@@ -3,27 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+
+    android:background="@drawable/activities_menu_item"
     android:gravity="center"
-    android:background="@drawable/black_border"
     android:orientation="vertical"
 
     >
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/iv_icon"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
         />
 
     <TextView
         android:id="@+id/grid_item_label"
+        style="@style/TextActivitiesMainMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        tools:ignore="InefficientWeight"
-
-        android:padding="0dp"
-        android:textSize="12sp" >
-    </TextView>
+        tools:ignore="InefficientWeight" />
 
 </LinearLayout>

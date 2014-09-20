@@ -63,8 +63,8 @@ public class SpotsFragment extends Fragment {
     }
 
     private void changeTabsBackgroudColor(View activeTab, View nonActiveTAb) {
-        activeTab.setBackgroundColor(getResources().getColor(R.color.tab_background_pressed));
-        nonActiveTAb.setBackgroundColor(getResources().getColor(R.color.tab_background_not_pressed));
+        activeTab.setBackgroundColor(getResources().getColor(R.color.button_pressed));
+        nonActiveTAb.setBackgroundColor(getResources().getColor(R.color.button_not_pressed));
     }
 
     private void initializeFragments() {

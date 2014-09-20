@@ -12,23 +12,23 @@
 
         <TextView
             android:id="@+id/tab_info"
+            style="@style/TextButtonsTabs"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/tab_background_pressed"
+            android:background="@color/button_pressed"
             android:gravity="center"
-            android:text="@string/tab_info_name"
-            android:textColor="@color/text_color" />
+            android:text="@string/tab_info_name" />
 
         <TextView
             android:id="@+id/tab_events"
+            style="@style/TextButtonsTabs"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/tab_background_not_pressed"
+            android:background="@color/button_not_pressed"
             android:gravity="center"
-            android:text="@string/tab_events_name"
-            android:textColor="@color/text_color" />
+            android:text="@string/tab_events_name" />
 
 
     </LinearLayout>
