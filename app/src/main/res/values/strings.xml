@@ -17,6 +17,8 @@
     <string name="tab_info_name">INFO</string>
     <string name="tab_events_name">EVENTS</string>
     <string name="button_create_new_game_label">CREATE NEW GAME</string>
+    <string name="create_new_game_tab_map">MAP</string>
+    <string name="create_new_game_tab_list">LIST</string>
 
     <plurals name="numberOfEvents">
         <item quantity="zero">0 events</item>

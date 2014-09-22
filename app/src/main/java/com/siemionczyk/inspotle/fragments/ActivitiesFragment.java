@@ -14,10 +14,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.siemionczyk.inspotle.CreateNewGameActivity;
 import com.siemionczyk.inspotle.R;
 import com.siemionczyk.inspotle.api.InspotleApiClient;
 import com.siemionczyk.inspotle.events.ActivitiesResponseEvent;
 import com.siemionczyk.inspotle.model.Activity;
+import com.siemionczyk.inspotle.utils.ViewUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -55,13 +57,30 @@ public class ActivitiesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_activities, container, false);
 
-        if (gridView == null) {
-            gridView = (GridView) rootView.findViewById(R.id.gridView1);
-        }
+        initializeViews(rootView);
 
         InspotleApiClient.getInstance().getActivities();
 
         return rootView;
+    }
+
+
+    private void initializeViews(View rootView) {
+
+        if (gridView == null) {
+            gridView = (GridView) rootView.findViewById(R.id.gridView1);
+        }
+
+        ViewUtils.setOnClickListener(rootView, R.id.button_create_new_game, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchCreateNewGameActivity();
+            }
+        });
+    }
+
+    private void launchCreateNewGameActivity() {
+        startActivity(CreateNewGameActivity.newIntent(getActivity()));
     }
 
 

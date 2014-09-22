@@ -54,11 +54,7 @@ public class SingleSpotInfoFragment extends Fragment {
         ViewUtils.setText(getNrEvents(spot.getEvents().size()), rootView, R.id.tv_events_nr);
         ViewUtils.setText(spot.getShort_description(), rootView, R.id.tv_short_description);
 
-
-
-
         Log.i(TAG, "on CreateVIew:" + mMapFragment.getMap());
-
     }
 
 

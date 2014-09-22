@@ -18,6 +18,7 @@ import com.siemionczyk.inspotle.utils.ViewUtils;
 public class SpotsFragment extends Fragment {
 
     public static final String TAG = SpotsFragment.class.getSimpleName();
+
     Fragment spotsMapFragment = new SpotsMapFragment();
 
     Fragment spotsListFragment = new SpotsListFragment();
