@@ -3,12 +3,10 @@ package com.siemionczyk.inspotle.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -18,6 +16,7 @@ import com.siemionczyk.inspotle.R;
 import com.siemionczyk.inspotle.api.InspotleApiClient;
 import com.siemionczyk.inspotle.events.SpotsResponseEvent;
 import com.siemionczyk.inspotle.model.Spot;
+import com.siemionczyk.inspotle.utils.MapUtils;
 
 import java.util.List;
 
@@ -33,7 +32,6 @@ public class SpotsMapFragment extends Fragment {
 
     SupportMapFragment mMapFragment;
 
-    private static final float MAP_ZOOM_LEVEL = 10f;
 
 
     @Override
@@ -77,11 +75,9 @@ public class SpotsMapFragment extends Fragment {
     @SuppressWarnings("unused")
     public void onEvent(SpotsResponseEvent event) {
 
-        GoogleMap mMap = mMapFragment.getMap();
-        Log.d(TAG, "mMap:" + mMap);
 
         for (Spot spot : event.getSpots()) {
-            Marker marker = mMap.addMarker(new MarkerOptions()
+            Marker marker = getMap().addMarker(new MarkerOptions()
                     .position(spot.getLatLng())
                     .snippet(spot.getShort_description())
                     .title(spot.getName()));
@@ -89,25 +85,19 @@ public class SpotsMapFragment extends Fragment {
 
         LatLng latLngOfLast =
                 getLatLngOfLast(event.getSpots());
-
-        centerMapOn(latLngOfLast);
+        MapUtils.centerMapOn(getMap(), latLngOfLast, MapUtils.MAP_ZOOM_LEVEL);
 
     }
 
-    private String getSnippetText(Spot spot){
+    private String getSnippetText(Spot spot) {
         return "";
     }
-
 
 
     private LatLng getLatLngOfLast(List<Spot> spots) {
         return spots.get(spots.size() - 1).getLatLng();
     }
 
-
-    private void centerMapOn(LatLng location) {
-        getMap().animateCamera(CameraUpdateFactory.newLatLngZoom(location, MAP_ZOOM_LEVEL));
-    }
 
     private GoogleMap getMap() {
         return mMapFragment.getMap();
