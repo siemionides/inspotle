@@ -23,6 +23,7 @@ public class Spot implements android.os.Parcelable {
     String post_code;
     String city;
     String country;
+    List<Activity> activities;
     List<Event> events;
 
 

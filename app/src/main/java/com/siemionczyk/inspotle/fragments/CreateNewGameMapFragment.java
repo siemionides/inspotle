@@ -10,11 +10,12 @@ import com.siemionczyk.inspotle.utils.MapUtils;
 /**
  * Created by michalsiemionczyk on 18/09/14.
  */
-public class SpotsMapFragment extends TabMapFragment {
+public class CreateNewGameMapFragment extends TabMapFragment {
 
 
     @Override
     public void onEvent(SpotsResponseEvent event) {
+
         for (Spot spot : event.getSpots()) {
             Marker marker = getMap().addMarker(new MarkerOptions()
                     .position(spot.getLatLng())

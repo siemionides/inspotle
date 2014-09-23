@@ -9,11 +9,8 @@ import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
 
-import com.siemionczyk.inspotle.fragments.SingleSpotEventsFragment;
-import com.siemionczyk.inspotle.fragments.SingleSpotInfoFragment;
-import com.siemionczyk.inspotle.fragments.SpotsListFragment;
-import com.siemionczyk.inspotle.fragments.SpotsMapFragment;
-import com.siemionczyk.inspotle.model.Spot;
+import com.siemionczyk.inspotle.fragments.CreateNewGameListFragment;
+import com.siemionczyk.inspotle.fragments.CreateNewGameMapFragment;
 import com.siemionczyk.inspotle.utils.ViewUtils;
 
 /**
@@ -25,9 +22,9 @@ public class CreateNewGameActivity extends FragmentActivity {
     private final static String TAG = CreateNewGameActivity.class.getSimpleName();
 
 
-    Fragment spotsMapFragment = new SpotsMapFragment();
+    Fragment mapFragment = new CreateNewGameMapFragment();
 
-    Fragment spotsListFragment = new SpotsListFragment();
+    Fragment listFragment = new CreateNewGameListFragment();
 
     private final static String TAG_MAP = "tag_map";
     private final static String TAG_LIST = "tag_list";
@@ -51,7 +48,7 @@ public class CreateNewGameActivity extends FragmentActivity {
                         ViewUtils.findView(CreateNewGameActivity.this, R.id.tab_map),
                         ViewUtils.findView(CreateNewGameActivity.this, R.id.tab_list)
                 );
-                replaceFragment(spotsMapFragment, TAG_MAP);
+                replaceFragment(mapFragment, TAG_MAP);
             }
         });
 
@@ -62,11 +59,11 @@ public class CreateNewGameActivity extends FragmentActivity {
                         ViewUtils.findView(CreateNewGameActivity.this, R.id.tab_list),
                         ViewUtils.findView(CreateNewGameActivity.this, R.id.tab_map)
                 );
-                replaceFragment(spotsListFragment, TAG_LIST);
+                replaceFragment(listFragment, TAG_LIST);
             }
         });
 
-        replaceFragment(spotsMapFragment, TAG_MAP);
+        replaceFragment(mapFragment, TAG_MAP);
     }
 
 

@@ -5,14 +5,20 @@ import android.graphics.Bitmap;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.StringRes;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public final class ViewUtils {
 
     private ViewUtils() {
+    }
+
+    public static void addView(LinearLayout parent, View child){
+        parent.addView(child);
     }
 
     public static <T extends View> T findView(View parent, @IdRes int viewId) {
@@ -61,6 +67,10 @@ public final class ViewUtils {
     public static void setImage(Bitmap bitmap, View parent, @IdRes int viewId) {
         ImageView imageView = findView(parent, viewId);
         imageView.setImageBitmap(bitmap);
+    }
+
+    private static void setViewId(View view, @LayoutRes int id){
+        view.setId(id);
     }
 
     public static void setBackground(@DrawableRes int drawableId, View parent, @IdRes int viewId) {
