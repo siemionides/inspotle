@@ -12,9 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.siemionczyk.inspotle.R;
-import com.siemionczyk.inspotle.SingleSpotActivity;
+import com.siemionczyk.inspotle.activities.SingleSpotActivity;
 import com.siemionczyk.inspotle.adapters.CreateNewGameSpotsAdapter;
-import com.siemionczyk.inspotle.adapters.SpotsAdapter;
 import com.siemionczyk.inspotle.api.InspotleApiClient;
 import com.siemionczyk.inspotle.events.SpotsResponseEvent;
 import com.siemionczyk.inspotle.model.Spot;

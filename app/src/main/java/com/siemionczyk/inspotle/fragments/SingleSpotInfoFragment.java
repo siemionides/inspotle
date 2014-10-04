@@ -14,7 +14,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.siemionczyk.inspotle.R;
-import com.siemionczyk.inspotle.SingleSpotActivity;
+import com.siemionczyk.inspotle.activities.SingleSpotActivity;
 import com.siemionczyk.inspotle.model.Spot;
 import com.siemionczyk.inspotle.utils.MapUtils;
 import com.siemionczyk.inspotle.utils.ViewUtils;

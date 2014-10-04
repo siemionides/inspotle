@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.siemionczyk.inspotle.R;
 import com.siemionczyk.inspotle.model.Activity;
 import com.siemionczyk.inspotle.model.Spot;
+import com.siemionczyk.inspotle.utils.ResourcesUtils;
 import com.siemionczyk.inspotle.utils.ViewUtils;
 import com.squareup.picasso.Picasso;
 
@@ -77,13 +78,6 @@ public class CreateNewGameSpotsAdapter extends BaseAdapter {
         return viewholder;
     }
 
-    private void injectImageViewsToLayout(LinearLayout photosLayout, ImageView[] ivPhotos) {
-        for (ImageView imageView : ivPhotos) {
-            photosLayout.addView(imageView);
-        }
-    }
-
-
 
     private ImageView[] getInitializedArray(Context ctx, int nrImages) {
         ImageView[] ivArray = new ImageView[nrImages];
@@ -94,11 +88,10 @@ public class CreateNewGameSpotsAdapter extends BaseAdapter {
     }
 
     private void bind(Viewholder viewHolder, Spot spot) {
-        viewHolder.tvEventsNr.setText("" + spot.getEvents().size());
+        viewHolder.tvEventsNr.setText(ResourcesUtils.getNrEventsText(context.getResources(), spot.getEvents().size()) );
         viewHolder.tvDistanceFrom.setText(spot.getLatitude() + " " + spot.getLongitude());
         viewHolder.spotName.setText(spot.getName());
 
-        Log.i(TAG, "name: " + spot.getName() + ", activieis:" + spot.getActivities().size());
 
         viewHolder.photosLayout.removeAllViews();
         for (int i = 0; i < spot.getActivities().size(); i++) {

@@ -8,4 +8,11 @@
     <color name="text_link_color">#6AAAE6</color>
 
     <color name="activitie_item_border_color">#3E4751</color>
+
+    <color name="color_light_greyish">#F6F6F6</color>
+
+    <color name="color_greyish">#BEBEBE</color>
+    <color name="white">#FFFFFF</color>
+
+
 </resources>

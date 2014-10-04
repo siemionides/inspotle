@@ -92,6 +92,10 @@ public final class ViewUtils {
         View view = findView(activity, viewId);
         view.setSelected(false);
     }
+//    public static void setNotSelected(Activity activity, @IdRes int viewId) {
+//        View view = findView(activity, viewId);
+//        view.setSelected(false);
+//    }
 
     public static void setTextColor(@ColorRes int colorRes, Activity activity, @IdRes int viewId) {
         TextView view = findView(activity, viewId);

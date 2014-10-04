@@ -14,6 +14,10 @@
         <item name="android:textSize">17sp</item>
     </style>
 
+    <style name="TextH4">
+        <item name="android:textSize">15sp</item>
+    </style>
+
     <style name="TextActivitiesMainMenu">
         <item name="android:textColor">@color/text_color</item>
         <item name="android:textSize">12sp</item>
@@ -22,6 +26,7 @@
     <style name="TextButtonsTabs">
         <item name="android:textColor">@color/text_color</item>
         <item name="android:textSize">12sp</item>
+        <item name="android:background">@color/button_pressed</item>
     </style>
 
 

@@ -10,10 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.siemionczyk.inspotle.R;
-import com.siemionczyk.inspotle.SingleSpotActivity;
+import com.siemionczyk.inspotle.activities.SingleSpotActivity;
 import com.siemionczyk.inspotle.adapters.SpotsAdapter;
 import com.siemionczyk.inspotle.api.InspotleApiClient;
 import com.siemionczyk.inspotle.events.SpotsResponseEvent;

@@ -1,4 +1,4 @@
-package com.siemionczyk.inspotle;
+package com.siemionczyk.inspotle.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
 
+import com.siemionczyk.inspotle.R;
 import com.siemionczyk.inspotle.fragments.CreateNewGameListFragment;
 import com.siemionczyk.inspotle.fragments.CreateNewGameMapFragment;
 import com.siemionczyk.inspotle.utils.ViewUtils;
@@ -29,10 +30,9 @@ public class CreateNewGameActivity extends FragmentActivity {
     private final static String TAG_MAP = "tag_map";
     private final static String TAG_LIST = "tag_list";
 
-    public static Intent newIntent(Context ctx){
+    public static Intent newIntent(Context ctx) {
         return new Intent(ctx, CreateNewGameActivity.class);
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +65,6 @@ public class CreateNewGameActivity extends FragmentActivity {
 
         replaceFragment(mapFragment, TAG_MAP);
     }
-
-
 
 
     private void changeTabsBackgroudColor(View activeTab, View nonActiveTAb) {

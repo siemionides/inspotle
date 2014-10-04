@@ -1,4 +1,4 @@
-package com.siemionczyk.inspotle;
+package com.siemionczyk.inspotle.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -20,6 +20,8 @@ import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
+import com.siemionczyk.inspotle.NavigationDrawerFragment;
+import com.siemionczyk.inspotle.R;
 import com.siemionczyk.inspotle.fragments.ActivitiesFragment;
 import com.siemionczyk.inspotle.fragments.SpotsFragment;
 

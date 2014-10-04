@@ -20,6 +20,12 @@
     <string name="create_new_game_tab_map">MAP</string>
     <string name="create_new_game_tab_list">LIST</string>
     <string name="create_new_game_activity_title">CREATE NEW GAME</string>
+    <string name="sport">SPORT</string>
+    <string name="date">DATE</string>
+    <string name="now">Now</string>
+    <string name="time">TIME</string>
+    <string name="place">PLACE</string>
+    <string name="button_bottom_save_game">SAVE GAME</string>
 
     <plurals name="numberOfEvents">
         <item quantity="zero">0 events</item>

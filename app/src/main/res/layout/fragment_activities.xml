@@ -18,7 +18,7 @@
         style="@style/TextButtonsTabs"
         android:id="@+id/button_create_new_game"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/button_bottom_height"
         android:layout_gravity="center_horizontal"
         android:background="@color/button_pressed"
         android:text="@string/button_create_new_game_label"

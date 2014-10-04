@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 
 import com.siemionczyk.inspotle.R;
 import com.siemionczyk.inspotle.model.Spot;
+import com.siemionczyk.inspotle.utils.ResourcesUtils;
 import com.siemionczyk.inspotle.utils.ViewUtils;
 
 import java.util.List;
@@ -59,12 +60,8 @@ public class SpotsAdapter extends BaseAdapter {
     private void bind(View view, Spot spot) {
         ViewUtils.setText(spot.getName(), view, R.id.tv_spot_name);
         ViewUtils.setText(spot.getLatitude() + " " + spot.getLongitude(), view, R.id.tv_distance_from);
-        ViewUtils.setText(getNrEvents(spot.getEvents().size()), view, R.id.tv_events_nr);
+        ViewUtils.setText(ResourcesUtils.getNrEventsText(context.getResources(), spot.getEvents().size()), view, R.id.tv_events_nr);
     }
 
 
-    private String getNrEvents(int nrEvents){
-        Resources res = this.context.getResources();
-        return res.getQuantityString(R.plurals.numberOfEvents, nrEvents, nrEvents);
-    }
 }

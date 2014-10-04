@@ -1,4 +1,4 @@
-package com.siemionczyk.inspotle;
+package com.siemionczyk.inspotle.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
 
+import com.siemionczyk.inspotle.R;
 import com.siemionczyk.inspotle.fragments.SingleSpotEventsFragment;
 import com.siemionczyk.inspotle.fragments.SingleSpotInfoFragment;
 import com.siemionczyk.inspotle.model.Spot;

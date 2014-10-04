@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.siemionczyk.inspotle.CreateNewGameActivity;
+import com.siemionczyk.inspotle.activities.CreateNewGameActivity;
 import com.siemionczyk.inspotle.R;
 import com.siemionczyk.inspotle.api.InspotleApiClient;
 import com.siemionczyk.inspotle.events.ActivitiesResponseEvent;
