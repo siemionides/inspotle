@@ -25,6 +25,7 @@ public class CreateNewGameMapFragment extends TabMapFragment {
 
         LatLng latLngOfLast =
                 getLatLngOfLast(event.getSpots());
+
         MapUtils.centerMapOn(getMap(), latLngOfLast, MapUtils.MAP_ZOOM_LEVEL);
     }
 }

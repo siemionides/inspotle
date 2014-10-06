@@ -61,7 +61,6 @@ public abstract class TabMapFragment extends Fragment {
                 .add(R.id.map_container, mMapFragment)
                 .commit();
 
-//        mMap = mMapFragment.getMap();
 
 
         InspotleApiClient.getInstance().getSpots();

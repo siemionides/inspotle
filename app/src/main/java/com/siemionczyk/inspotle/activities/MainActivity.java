@@ -112,24 +112,34 @@ public class MainActivity extends FragmentActivity
     public void onNavigationDrawerItemSelected(int position) {
 
         Fragment fragment = null;
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+
 
         switch (position) {
             case 0: {
                 fragment = new ActivitiesFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, fragment)
+                        .commit();
                 break;
             }
             case 1: {
                 fragment = new SpotsFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, fragment)
+                        .commit();
                 break;
             }
+
+            case 2: {
+                launchAddNewSpotActivity();
+            }
         }
+    }
 
-
-//        // update the main content by replacing fragments
-        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, fragment)
-                .commit();
+    private void launchAddNewSpotActivity() {
+        Intent intent = AddNewSpotMapActivity.newIntent(this);
+        startActivity(intent);
     }
 
     public void onSectionAttached(int number) {

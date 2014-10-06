@@ -10,6 +10,7 @@ import android.widget.RadioButton;
 
 import com.siemionczyk.inspotle.R;
 import com.siemionczyk.inspotle.ui.SportActivitiesIconContainer;
+import com.siemionczyk.inspotle.ui.SportActivitiesIconContainerOneOneSelected;
 import com.siemionczyk.inspotle.utils.ViewUtils;
 
 /**
@@ -18,7 +19,7 @@ import com.siemionczyk.inspotle.utils.ViewUtils;
 public class CreateNewGameFinalActivity extends FragmentActivity {
 
 
-    SportActivitiesIconContainer iconContainer = new SportActivitiesIconContainer();
+    SportActivitiesIconContainerOneOneSelected iconContainer = new SportActivitiesIconContainerOneOneSelected();
 
 
     @Override

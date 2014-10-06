@@ -7,6 +7,8 @@
 
     <string name="title_section1">Activities</string>
     <string name="title_section2">Spots</string>
+    <string name="title_section3">Add New Spot</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
@@ -20,12 +22,18 @@
     <string name="create_new_game_tab_map">MAP</string>
     <string name="create_new_game_tab_list">LIST</string>
     <string name="create_new_game_activity_title">CREATE NEW GAME</string>
+    <string name="add_new_place_activity_title">ADD NEW PLACE</string>
     <string name="sport">SPORT</string>
     <string name="date">DATE</string>
     <string name="now">Now</string>
     <string name="time">TIME</string>
     <string name="place">PLACE</string>
     <string name="button_bottom_save_game">SAVE GAME</string>
+    <string name="name">NAME</string>
+    <string name="street">STREET</string>
+    <string name="city">CITY</string>
+    <string name="desription">DESCRIPTION</string>
+    <string name="save_place">SAVE PLACE</string>
 
     <plurals name="numberOfEvents">
         <item quantity="zero">0 events</item>
