@@ -177,7 +177,7 @@
 
 
     <Button
-        android:id="@+id/button_save_game"
+        android:id="@+id/button_save_place"
         style="@style/TextButtonsTabs"
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_bottom_height"

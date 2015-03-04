@@ -6,6 +6,7 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.siemionczyk.inspotle.events.ActivitiesResponseEvent;
+import com.siemionczyk.inspotle.events.SpotUpdatedEvent;
 import com.siemionczyk.inspotle.events.SpotsResponseEvent;
 import com.siemionczyk.inspotle.model.Activity;
 import com.siemionczyk.inspotle.model.Spot;
@@ -33,16 +34,16 @@ public final class InspotleApiClient {
 
     private static InspotleApiClient instance;
 
-    public static InspotleApiClient getInstance(){
-        if (instance == null){
+    public static InspotleApiClient getInstance() {
+        if (instance == null) {
             instance = new InspotleApiClient();
         }
-        return  instance;
+        return instance;
     }
 
-    private InspotleApiClient(){
+    private InspotleApiClient() {
 
-        Gson gson =  new GsonBuilder()
+        Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create();
 
@@ -58,12 +59,12 @@ public final class InspotleApiClient {
     }
 
 
-    public void getActivities(){
+    public void getActivities() {
         api.getActivities(new Callback<List<Activity>>() {
             @Override
             public void success(List<Activity> activities, Response response) {
                 Log.d(TAG, "success");
-                EventBus.getDefault().post( new ActivitiesResponseEvent(activities));
+                EventBus.getDefault().post(new ActivitiesResponseEvent(activities));
             }
 
             @Override
@@ -75,12 +76,12 @@ public final class InspotleApiClient {
     }
 
 
-    public void getSpots(){
+    public void getSpots() {
         api.getSpots(new Callback<List<Spot>>() {
             @Override
             public void success(List<Spot> spots, Response response) {
                 Log.d(TAG, "success");
-                EventBus.getDefault().post( new SpotsResponseEvent(spots));
+                EventBus.getDefault().post(new SpotsResponseEvent(spots));
 
             }
 
@@ -90,9 +91,23 @@ public final class InspotleApiClient {
 
             }
         });
-
     }
 
+    public void updateSpot(int id, String spotName) {
+        api.updateSpot(id, spotName, new Callback() {
+            @Override
+            public void success(Object o, Response response) {
+                EventBus.getDefault().post(new SpotUpdatedEvent());
+                Log.d(TAG, "success");
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(TAG, "failure:" + error.getMessage());
+
+            }
+        });
+    }
 
 
 }

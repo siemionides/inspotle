@@ -28,7 +28,10 @@ public class AddNewSpotMapActivity extends FragmentActivity implements GoogleMap
 
     SupportMapFragment mMapFragment;
 
+    GoogleMap gMap;
+
     HashMap<Marker, Spot> markerData = new HashMap<Marker, Spot>();
+
 
     public static Intent newIntent(Context ctx) {
         return new Intent(ctx, AddNewSpotMapActivity.class);
@@ -37,13 +40,14 @@ public class AddNewSpotMapActivity extends FragmentActivity implements GoogleMap
     @Override
     protected void onResume() {
         super.onResume();
+        doMapCheck();
         EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        EventBus.getDefault().register(this);
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -51,17 +55,15 @@ public class AddNewSpotMapActivity extends FragmentActivity implements GoogleMap
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_place_map);
 
-        initializeMap();
+
+        bindViews();
 
         InspotleApiClient.getInstance().getSpots();
-
-
     }
 
     protected GoogleMap getMap() {
-        return mMapFragment.getMap();
+        return gMap;
     }
-
 
     @SuppressWarnings("unused")
     public void onEvent(SpotsResponseEvent event) {
@@ -78,29 +80,59 @@ public class AddNewSpotMapActivity extends FragmentActivity implements GoogleMap
         centerMapOnLastSpot(event);
     }
 
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+
+        Spot spotClicked = getSpotAssociated(marker);
+        launchDetailsActivity(spotClicked);
+    }
+
+    private Spot getSpotAssociated(Marker marker) {
+        return markerData.get(marker);
+    }
+
+    public void setgMap(GoogleMap gMap) {
+        this.gMap = gMap;
+    }
+
+
+    private void bindViews() {
+        mMapFragment = SupportMapFragment.newInstance();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.map_container, mMapFragment)
+                .commit();
+    }
+
     private void centerMapOnLastSpot(SpotsResponseEvent event) {
         LatLng latLngOfLast =
                 getLatLngOfLast(event.getSpots());
         MapUtils.centerMapOn(getMap(), latLngOfLast, MapUtils.MAP_ZOOM_LEVEL);
     }
 
-    @Override
-    public void onInfoWindowClick(Marker marker) {
+    private void doMapCheck() {
+        // Do a null check to confirm that we have not already instantiated the map.
+        if (getMap() == null) {
+            // Try to obtain the map from the SupportMapFragment.
+            setgMap(mMapFragment.getMap());
+            // Check if we were successful in obtaining the map.
+            if (getMap() != null) {
+
+                initializeMap();
+            }
+        }
+    }
 
 
+    private void launchDetailsActivity(Spot spotClicked) {
+        Intent intent = AddNewSpotDetailsActivity.newIntent(this);
+        intent.putExtra(AddNewSpotDetailsActivity.BUNDLE_KEY_SPOT, spotClicked);
 
-//        marker.
-//        marker.get
-
-
+        startActivity(intent);
     }
 
     private void initializeMap() {
-        mMapFragment = SupportMapFragment.newInstance();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.map_container, mMapFragment)
-                .commit();
+
 
         getMap().setOnInfoWindowClickListener(this);
     }

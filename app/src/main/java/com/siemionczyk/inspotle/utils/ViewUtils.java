@@ -29,6 +29,11 @@ public final class ViewUtils {
         return (T) activity.findViewById(viewId);
     }
 
+    public static String getText(Activity activity, @IdRes int viewId){
+        TextView view = findView(activity, viewId);
+        return view.getText().toString();
+    }
+
     public static void setText(CharSequence text, View parent, @IdRes int viewId) {
         TextView view = findView(parent, viewId);
         view.setText(text);

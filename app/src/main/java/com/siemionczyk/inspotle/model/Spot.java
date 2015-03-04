@@ -26,7 +26,6 @@ public class Spot implements android.os.Parcelable {
     List<Activity> activities;
     List<Event> events;
 
-
     public LatLng getLatLng(){
         double latitude = Double.valueOf(this.latitude);
         double longitude = Double.valueOf(this.longitude);
