@@ -15,7 +15,6 @@ import retrofit.http.Path;
  */
 public interface InspotleApi {
 
-
     @GET("/activities.json")
     void getActivities(Callback<List<Activity>> callback);
 

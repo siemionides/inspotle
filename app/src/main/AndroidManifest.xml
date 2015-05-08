@@ -78,6 +78,9 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="@string/google_maps_api_key" />
 
+        <meta-data
+            android:name="com.crashlytics.ApiKey"
+            android:value="4fb6504551d9582cf1d2a1b3cd181e74a6b932fd" />
     </application>
 
 </manifest>

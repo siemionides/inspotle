@@ -18,10 +18,7 @@ import com.siemionczyk.inspotle.utils.ViewUtils;
  * Created by michalsiemionczyk on 19/09/14.
  */
 public class CreateNewGameActivity extends FragmentActivity {
-
-
     private final static String TAG = CreateNewGameActivity.class.getSimpleName();
-
 
     Fragment mapFragment = new CreateNewGameMapFragment();
 

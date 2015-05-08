@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -32,6 +33,8 @@ public class AddNewSpotMapActivity extends FragmentActivity implements GoogleMap
 
     HashMap<Marker, Spot> markerData = new HashMap<Marker, Spot>();
 
+    Marker selectedNewSpot = null;
+
 
     public static Intent newIntent(Context ctx) {
         return new Intent(ctx, AddNewSpotMapActivity.class);
@@ -54,10 +57,7 @@ public class AddNewSpotMapActivity extends FragmentActivity implements GoogleMap
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_place_map);
-
-
         bindViews();
-
         InspotleApiClient.getInstance().getSpots();
     }
 
@@ -73,10 +73,7 @@ public class AddNewSpotMapActivity extends FragmentActivity implements GoogleMap
                     .snippet(spot.getShort_description())
                     .title(spot.getName()));
             markerData.put(marker, spot);
-
         }
-
-
         centerMapOnLastSpot(event);
     }
 
@@ -117,26 +114,31 @@ public class AddNewSpotMapActivity extends FragmentActivity implements GoogleMap
             setgMap(mMapFragment.getMap());
             // Check if we were successful in obtaining the map.
             if (getMap() != null) {
-
                 initializeMap();
             }
         }
     }
 
-
     private void launchDetailsActivity(Spot spotClicked) {
         Intent intent = AddNewSpotDetailsActivity.newIntent(this);
         intent.putExtra(AddNewSpotDetailsActivity.BUNDLE_KEY_SPOT, spotClicked);
-
         startActivity(intent);
     }
 
     private void initializeMap() {
-
-
         getMap().setOnInfoWindowClickListener(this);
+        getMap().setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                onMapClickForNewSpot(latLng);
+            }
+        });
     }
 
+    private void onMapClickForNewSpot(LatLng latLng){
+        if (selectedNewSpot != null ){ selectedNewSpot.remove();}
+        selectedNewSpot = getMap().addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+    }
 
     protected LatLng getLatLngOfLast(List<Spot> spots) {
         return spots.get(spots.size() - 1).getLatLng();
