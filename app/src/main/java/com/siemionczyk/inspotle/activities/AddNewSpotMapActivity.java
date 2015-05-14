@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -19,11 +18,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.siemionczyk.inspotle.R;
 import com.siemionczyk.inspotle.api.InspotleApiClient;
 import com.siemionczyk.inspotle.events.SpotsResponseEvent;
+import com.siemionczyk.inspotle.model.SessionModel;
 import com.siemionczyk.inspotle.model.Spot;
+import com.siemionczyk.inspotle.utils.AnimationUtils;
 import com.siemionczyk.inspotle.utils.MapUtils;
 import com.siemionczyk.inspotle.utils.ViewUtils;
 
-import java.util.HashMap;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
@@ -33,10 +33,7 @@ import de.greenrobot.event.EventBus;
  */
 public class AddNewSpotMapActivity extends FragmentActivity implements GoogleMap.OnInfoWindowClickListener {
 
-    HashMap<Marker, Spot> markerData = new HashMap<Marker, Spot>();
-
-    Marker selectedNewSpot = null;
-
+    SessionModel sessionModel = SessionModel.getInstance();
 
     public static Intent newIntent(Context ctx) {
         return new Intent(ctx, AddNewSpotMapActivity.class);
@@ -45,7 +42,6 @@ public class AddNewSpotMapActivity extends FragmentActivity implements GoogleMap
     @Override
     protected void onResume() {
         super.onResume();
-//        doMapCheck();
         EventBus.getDefault().register(this);
     }
 
@@ -70,9 +66,9 @@ public class AddNewSpotMapActivity extends FragmentActivity implements GoogleMap
     }
 
     private void addDataToMap(final SpotsResponseEvent event) {
-
         final LatLng latLngOfLast =
                 getLatLngOfLast(event.getSpots());
+
         MapUtils.performOnMap(getMapFragment(), new MapUtils.PerformOnMap() {
             @Override
             public void perform(GoogleMap googleMap) {
@@ -81,7 +77,7 @@ public class AddNewSpotMapActivity extends FragmentActivity implements GoogleMap
                             .position(spot.getLatLng())
                             .snippet(spot.getShort_description())
                             .title(spot.getName()));
-                    markerData.put(marker, spot);
+                    sessionModel.getNewSpots().putMarker(marker, spot);
                 }
 
                 MapUtils.centerMapOn(googleMap, latLngOfLast, MapUtils.MAP_ZOOM_LEVEL);
@@ -101,25 +97,8 @@ public class AddNewSpotMapActivity extends FragmentActivity implements GoogleMap
     }
 
     private Spot getSpotAssociated(Marker marker) {
-        return markerData.get(marker);
+        return sessionModel.getNewSpots().getSpot(marker);
     }
-
-
-    private void centerMapOnLastSpot(SpotsResponseEvent event) {
-    }
-
-
-//    private void doMapCheck() {
-//        // Do a null check to confirm that we have not already instantiated the map.
-//        if (getMap() == null) {
-//            // Try to obtain the map from the SupportMapFragment.
-//            setgMap(mMapFragment.getMap());
-//            // Check if we were successful in obtaining the map.
-//            if (getMap() != null) {
-//                initializeMap();
-//            }
-//        }
-//    }
 
     private void launchDetailsActivity(Spot spotClicked) {
         Intent intent = AddNewSpotDetailsActivity.newIntent(this);
@@ -140,42 +119,16 @@ public class AddNewSpotMapActivity extends FragmentActivity implements GoogleMap
                 });
             }
         });
-
-
     }
 
     private void onMapClickForNewSpot(LatLng latLng, GoogleMap googleMap) {
-        if (selectedNewSpot != null) {
-            selectedNewSpot.remove();
-        }
-        selectedNewSpot = googleMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        showButtonNext((Button) ViewUtils.findView(this, R.id.button_add_new_spot));
+        sessionModel.getNewSpots().removeSelectedSpotIfExists();
+        Marker selectedNewSpot = googleMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+        sessionModel.getNewSpots().addNewSelectedSpot(selectedNewSpot);
+        AnimationUtils.showButtonNext((Button) ViewUtils.findView(this, R.id.button_add_new_spot));
     }
 
-    private void showButtonNext(Button buttonNextLayout) {
-        // hack for now - for apis youger than
-        //depending on the API, choose relevant version
-        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-        if (currentapiVersion < Build.VERSION_CODES.HONEYCOMB) {
-            //just "show" the button from bottom
 
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.MATCH_PARENT,
-                    RelativeLayout.LayoutParams.WRAP_CONTENT);
-
-            params.bottomMargin = 0;
-            params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-
-            buttonNextLayout.setLayoutParams(params);
-
-        } else {
-            int nextButtonHeight = buttonNextLayout.getHeight() - 1;
-            ObjectAnimator animation = ObjectAnimator.ofFloat(buttonNextLayout, "translationY", -nextButtonHeight);
-            animation.start();
-        }
-
-//        buttonNextLayout.setOnClickListener( listener );
-    }
 
     protected LatLng getLatLngOfLast(List<Spot> spots) {
         return spots.get(spots.size() - 1).getLatLng();
