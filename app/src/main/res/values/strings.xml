@@ -34,6 +34,7 @@
     <string name="city">CITY</string>
     <string name="desription">DESCRIPTION</string>
     <string name="save_place">SAVE PLACE</string>
+    <string name="add_new_spot_here">Add new SPOT here</string>
 
     <plurals name="numberOfEvents">
         <item quantity="zero">0 events</item>

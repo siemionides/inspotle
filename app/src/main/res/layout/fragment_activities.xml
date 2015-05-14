@@ -13,14 +13,5 @@
         android:layout_weight="1"
         android:numColumns="3" />
 
-
-    <Button
-        style="@style/TextButtonsTabs"
-        android:id="@+id/button_create_new_game"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/button_bottom_height"
-        android:layout_gravity="center_horizontal"
-        android:background="@color/button_pressed"
-        android:text="@string/button_create_new_game_label"
-        android:textColor="@android:color/white" />
+    <include layout="@layout/button_create_new_game" />
 </LinearLayout>

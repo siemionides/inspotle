@@ -47,7 +47,6 @@ public class CreateNewGameListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_spots_list, container, false);
 
-        Log.d(TAG, "onCreateView");
 
         InspotleApiClient.getInstance().getSpots();
 
@@ -58,7 +57,6 @@ public class CreateNewGameListFragment extends Fragment {
 
     @SuppressWarnings("unused")
     public void onEvent(SpotsResponseEvent event) {
-        Log.d(TAG, "onEvent SpotResponse:" + event.getSpots().size());
         populateList(event.getSpots());
     }
 
