@@ -16,10 +16,6 @@ public class NewSpots {
         return markerData.get(m);
     }
 
-    public Spot getSpotForSelectedMarker(){
-        return getSpot(getSelectedNewMarker());
-    }
-
     public Marker getSelectedNewMarker(){
         return selectedNewMarker;
     }
@@ -34,4 +30,7 @@ public class NewSpots {
         selectedNewMarker = marker;
     }
 
+    public boolean isNewMarker(Marker marker) {
+        return marker.equals(selectedNewMarker);
+    }
 }

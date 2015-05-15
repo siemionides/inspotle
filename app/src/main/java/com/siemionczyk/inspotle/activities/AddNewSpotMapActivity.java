@@ -100,6 +100,13 @@ public class AddNewSpotMapActivity extends FragmentActivity implements View.OnCl
         MapUtils.performOnMap(getMapFragment(), new MapUtils.PerformOnMap() {
             @Override
             public void perform(final GoogleMap googleMap) {
+                googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+                        onMapMarkerClick(marker);
+                        return false;
+                    }
+                });
                 googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                     @Override
                     public void onMapClick(LatLng latLng) {
@@ -110,9 +117,17 @@ public class AddNewSpotMapActivity extends FragmentActivity implements View.OnCl
         });
     }
 
+    private void onMapMarkerClick(Marker marker) {
+        if (sessionModel.getNewSpots().isNewMarker(marker)){
+            marker.remove();
+            AnimationUtils.hideButtonNext((Button) ViewUtils.findView(this, R.id.button_add_new_spot));
+        }
+    }
+
     private void onMapClickForNewSpot(LatLng latLng, GoogleMap googleMap) {
         sessionModel.getNewSpots().removeSelectedMarkerIfExists();
-        Marker selectedNewMarker = googleMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+        Marker selectedNewMarker = googleMap.addMarker(
+                new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
         sessionModel.getNewSpots().addNewSelectedMarker(selectedNewMarker);
         AnimationUtils.showButtonNext((Button) ViewUtils.findView(this, R.id.button_add_new_spot));
     }
