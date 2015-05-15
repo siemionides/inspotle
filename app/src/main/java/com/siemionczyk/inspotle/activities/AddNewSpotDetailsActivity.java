@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.siemionczyk.inspotle.R;
 import com.siemionczyk.inspotle.api.InspotleApiClient;
 import com.siemionczyk.inspotle.events.SpotUpdatedEvent;
@@ -24,11 +25,15 @@ import de.greenrobot.event.EventBus;
 public class AddNewSpotDetailsActivity extends FragmentActivity {
 
 
-    public static final String BUNDLE_KEY_SPOT = "bundle_key_spot";
+    public static final String BUNDLE_KEY_NEW_POSITION = "bundle_key_position";
 
     SportActivitiesIconContainerManySelected iconContainer = new SportActivitiesIconContainerManySelected();
 
-    Spot spot;
+    public static void start(Context ctx, LatLng newMarkerPosition){
+        Intent intent = new Intent(ctx, AddNewSpotDetailsActivity.class);
+        intent.putExtra(AddNewSpotDetailsActivity.BUNDLE_KEY_NEW_POSITION, newMarkerPosition);
+        ctx.startActivity(intent);
+    }
 
     public static Intent newIntent(Context ctx) {
         return new Intent(ctx, AddNewSpotDetailsActivity.class);
@@ -52,9 +57,9 @@ public class AddNewSpotDetailsActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_spot_details);
 
-        spot = getIntent().getParcelableExtra(BUNDLE_KEY_SPOT);
+        LatLng position = getIntent().getParcelableExtra(BUNDLE_KEY_NEW_POSITION);
 
-        fillViewData(spot);
+        fillViewData(position);
 
         configureViews();
 
@@ -77,17 +82,19 @@ public class AddNewSpotDetailsActivity extends FragmentActivity {
 
     private void onSavePlaceButtonPressed() {
         String name = ViewUtils.getText(this, R.id.ed_name);
-        InspotleApiClient.getInstance().updateSpot(spot.getId(), name);
+//        InspotleApiClient.getInstance().updateSpot(, name);
     }
 
-    private void fillViewData(Spot spot) {
-        fillActivitiesIcons(spot);
+    private void fillViewData(LatLng spot) {
+//        fillActivitiesIcons(spot);
+
+/*
 
 
         ViewUtils.setText(spot.getName(), this, R.id.ed_name);
         ViewUtils.setText(spot.getAddress1(), this, R.id.ed_street);
         ViewUtils.setText(spot.getAddress2(), this, R.id.ed_city);
-        ViewUtils.setText(spot.getShort_description(), this, R.id.ed_description);
+        ViewUtils.setText(spot.getShort_description(), this, R.id.ed_description);*/
     }
 
     private void fillActivitiesIcons(Spot spot) {

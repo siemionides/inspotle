@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class NewSpots {
     HashMap<Marker, Spot> markerData = new HashMap<Marker, Spot>();
-    Marker selectedNewSpot = null;
+    Marker selectedNewMarker = null;
 
     public void putMarker(Marker marker, Spot spot){
         markerData.put(marker, spot);
@@ -16,18 +16,22 @@ public class NewSpots {
         return markerData.get(m);
     }
 
-    public Marker getSelectedNewSpot(){
-        return selectedNewSpot;
+    public Spot getSpotForSelectedMarker(){
+        return getSpot(getSelectedNewMarker());
     }
 
-    public void removeSelectedSpotIfExists(){
-        if (selectedNewSpot != null){
-            selectedNewSpot.remove();
+    public Marker getSelectedNewMarker(){
+        return selectedNewMarker;
+    }
+
+    public void removeSelectedMarkerIfExists(){
+        if (selectedNewMarker != null){
+            selectedNewMarker.remove();
         }
     }
 
-    public void addNewSelectedSpot(Marker marker){
-        selectedNewSpot = marker;
+    public void addNewSelectedMarker(Marker marker){
+        selectedNewMarker = marker;
     }
 
 }

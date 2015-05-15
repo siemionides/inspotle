@@ -1,13 +1,12 @@
 package com.siemionczyk.inspotle.activities;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -31,8 +30,9 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by michalsiemionczyk on 04/10/14.
  */
-public class AddNewSpotMapActivity extends FragmentActivity implements GoogleMap.OnInfoWindowClickListener {
+public class AddNewSpotMapActivity extends FragmentActivity implements View.OnClickListener {
 
+    public static final String TAG = AddNewSpotMapActivity.class.getSimpleName();
     SessionModel sessionModel = SessionModel.getInstance();
 
     public static Intent newIntent(Context ctx) {
@@ -55,17 +55,23 @@ public class AddNewSpotMapActivity extends FragmentActivity implements GoogleMap
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_place_map);
-        initializeMap();
+        bindViews();
         InspotleApiClient.getInstance().getSpots();
+    }
+
+    private void bindViews() {
+        initializeMap();
+        ViewUtils.setOnClickListener(this, R.id.button_add_new_spot, this);
+
     }
 
 
     @SuppressWarnings("unused")
     public void onEvent(SpotsResponseEvent event) {
-        addDataToMap(event);
+        addExistingSpotsToMap(event);
     }
 
-    private void addDataToMap(final SpotsResponseEvent event) {
+    private void addExistingSpotsToMap(final SpotsResponseEvent event) {
         final LatLng latLngOfLast =
                 getLatLngOfLast(event.getSpots());
 
@@ -90,27 +96,10 @@ public class AddNewSpotMapActivity extends FragmentActivity implements GoogleMap
         return (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
     }
 
-    @Override
-    public void onInfoWindowClick(Marker marker) {
-        Spot spotClicked = getSpotAssociated(marker);
-        launchDetailsActivity(spotClicked);
-    }
-
-    private Spot getSpotAssociated(Marker marker) {
-        return sessionModel.getNewSpots().getSpot(marker);
-    }
-
-    private void launchDetailsActivity(Spot spotClicked) {
-        Intent intent = AddNewSpotDetailsActivity.newIntent(this);
-        intent.putExtra(AddNewSpotDetailsActivity.BUNDLE_KEY_SPOT, spotClicked);
-        startActivity(intent);
-    }
-
     private void initializeMap() {
         MapUtils.performOnMap(getMapFragment(), new MapUtils.PerformOnMap() {
             @Override
             public void perform(final GoogleMap googleMap) {
-                googleMap.setOnInfoWindowClickListener(AddNewSpotMapActivity.this);
                 googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                     @Override
                     public void onMapClick(LatLng latLng) {
@@ -122,9 +111,9 @@ public class AddNewSpotMapActivity extends FragmentActivity implements GoogleMap
     }
 
     private void onMapClickForNewSpot(LatLng latLng, GoogleMap googleMap) {
-        sessionModel.getNewSpots().removeSelectedSpotIfExists();
-        Marker selectedNewSpot = googleMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        sessionModel.getNewSpots().addNewSelectedSpot(selectedNewSpot);
+        sessionModel.getNewSpots().removeSelectedMarkerIfExists();
+        Marker selectedNewMarker = googleMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+        sessionModel.getNewSpots().addNewSelectedMarker(selectedNewMarker);
         AnimationUtils.showButtonNext((Button) ViewUtils.findView(this, R.id.button_add_new_spot));
     }
 
@@ -132,5 +121,11 @@ public class AddNewSpotMapActivity extends FragmentActivity implements GoogleMap
 
     protected LatLng getLatLngOfLast(List<Spot> spots) {
         return spots.get(spots.size() - 1).getLatLng();
+    }
+
+    @Override
+    public void onClick(View view) {
+        LatLng newPosition = sessionModel.getNewSpots().getSelectedNewMarker().getPosition();
+        AddNewSpotDetailsActivity.start(this, newPosition);
     }
 }
