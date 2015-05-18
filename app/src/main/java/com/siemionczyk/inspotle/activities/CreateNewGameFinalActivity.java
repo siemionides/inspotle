@@ -3,15 +3,17 @@ package com.siemionczyk.inspotle.activities;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 
 import com.siemionczyk.inspotle.R;
-import com.siemionczyk.inspotle.ui.SportActivitiesIconContainer;
+import com.siemionczyk.inspotle.api.InspotleApiClient;
+import com.siemionczyk.inspotle.events.ActivitiesResponseEvent;
+import com.siemionczyk.inspotle.model.Activity;
 import com.siemionczyk.inspotle.ui.SportActivitiesIconContainerOneOneSelected;
 import com.siemionczyk.inspotle.utils.ViewUtils;
+
+import java.util.List;
 
 /**
  * Created by michalsiemionczyk on 29/09/14.
@@ -27,8 +29,20 @@ public class CreateNewGameFinalActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_game_final);
         bindControls();
-        insertImages();
+        bindViews();
+    }
 
+    private void bindViews() {
+        insertImagesForActivitiesAsynchronously();
+    }
+
+    private void insertImagesForActivitiesAsynchronously() {
+        InspotleApiClient.getInstance().getActivities();
+    }
+
+    @SuppressWarnings("ununsed")
+    public void onEvent(ActivitiesResponseEvent event) {
+        insertImagesForActivities(event.getActivities());
     }
 
     private void bindControls() {
@@ -44,11 +58,12 @@ public class CreateNewGameFinalActivity extends FragmentActivity {
         });
     }
 
-    private void insertImages() {
+    private void insertImagesForActivities(List<Activity> activities) {
         LinearLayout activitiesIconsLayout = ViewUtils.findView(this, R.id.layout_sport_activities);
-
-        iconContainer.insertActivities(1, R.drawable.icon_activity_basketball_pressed, R.drawable.icon_activity_basketball, activitiesIconsLayout );
-        iconContainer.insertActivities(2, R.drawable.icon_activity_volleyball_pressed, R.drawable.icon_activity_volleyball, activitiesIconsLayout );
-        iconContainer.insertActivities(3, R.drawable.icon_activity_football_pressed, R.drawable.icon_activity_football, activitiesIconsLayout );
+        for (Activity activity : activities) {
+            String pressedDrawableUrl = activity.getIcon_white_url();
+            String nonPressedDrawableUrl = activity.getIcon_blue_url();
+            iconContainer.insertActivities(activity.getId(), pressedDrawableUrl, nonPressedDrawableUrl, activitiesIconsLayout);
+        }
     }
 }

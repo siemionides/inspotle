@@ -10,12 +10,15 @@ import android.widget.LinearLayout;
 import com.google.android.gms.maps.model.LatLng;
 import com.siemionczyk.inspotle.R;
 import com.siemionczyk.inspotle.api.InspotleApiClient;
+import com.siemionczyk.inspotle.events.ActivitiesResponseEvent;
 import com.siemionczyk.inspotle.events.SpotUpdatedEvent;
 import com.siemionczyk.inspotle.model.Activity;
 import com.siemionczyk.inspotle.model.Spot;
 import com.siemionczyk.inspotle.ui.SportActivitiesIconContainerManySelected;
 import com.siemionczyk.inspotle.utils.ResourcesUtils;
 import com.siemionczyk.inspotle.utils.ViewUtils;
+
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
@@ -56,7 +59,6 @@ public class AddNewSpotDetailsActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_spot_details);
-
         LatLng position = getIntent().getParcelableExtra(BUNDLE_KEY_NEW_POSITION);
 
         fillViewData(position);
@@ -70,6 +72,21 @@ public class AddNewSpotDetailsActivity extends FragmentActivity {
     public void onEvent(SpotUpdatedEvent event) {
 
     }
+
+    @SuppressWarnings("ununsed")
+    public void onEvent(ActivitiesResponseEvent event) {
+        fillActivitiesView(event.getActivities());
+    }
+
+    private void fillActivitiesView(List<Activity> activities) {
+        LinearLayout activitiesIconsLayout = ViewUtils.findView(this, R.id.layout_sport_activities);
+        for (Activity activity : activities) {
+            String pressedDrawableUrl = activity.getIcon_white_url();
+            String nonPressedDrawableUrl = activity.getIcon_blue_url();
+            iconContainer.insertActivities(activity.getId(), pressedDrawableUrl, nonPressedDrawableUrl, activitiesIconsLayout);
+        }
+    }
+
 
     private void configureViews() {
         ViewUtils.setOnClickListener(this, R.id.button_save_place, new View.OnClickListener() {
@@ -86,7 +103,7 @@ public class AddNewSpotDetailsActivity extends FragmentActivity {
     }
 
     private void fillViewData(LatLng spot) {
-//        fillActivitiesIcons(spot);
+        fillActivitiesIconsAsynchronously();
 
 /*
 
@@ -97,12 +114,7 @@ public class AddNewSpotDetailsActivity extends FragmentActivity {
         ViewUtils.setText(spot.getShort_description(), this, R.id.ed_description);*/
     }
 
-    private void fillActivitiesIcons(Spot spot) {
-        LinearLayout activitiesIconsLayout = ViewUtils.findView(this, R.id.layout_sport_activities);
-        for (Activity activity : spot.getActivities()) {
-            int pressedDrawableId = ResourcesUtils.convertAcitivityIdIntoPressedIconDrawableId(activity.getId());
-            int nonPressedDrawableId = ResourcesUtils.convertAcitivityIdIntoNonPressedIconDrawableId(activity.getId());
-            iconContainer.insertActivities(activity.getId(), pressedDrawableId, nonPressedDrawableId, activitiesIconsLayout);
-        }
+    private void fillActivitiesIconsAsynchronously(){
+        InspotleApiClient.getInstance().getActivities();
     }
 }

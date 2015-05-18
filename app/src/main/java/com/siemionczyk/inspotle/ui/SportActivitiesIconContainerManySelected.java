@@ -3,6 +3,8 @@ package com.siemionczyk.inspotle.ui;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.HashSet;
 
 /**
@@ -13,13 +15,14 @@ public class SportActivitiesIconContainerManySelected extends SportActivitiesIco
     private HashSet<Integer> currentlySelectedActivities = new HashSet<Integer>();
 
     @Override
-    public ImageView insertActivities(final int activityId, int drawablePrssedId, int drawableNonPressedId, LinearLayout containerView) {
-        ImageView imageView = super.insertActivities(activityId, drawablePrssedId, drawableNonPressedId, containerView);
-
+    public ImageView insertActivities(final int activityId, String drawablePrssedUrl, String drawableNonPressedUrl, LinearLayout containerView) {
+        ImageView imageView = super.insertActivities(activityId, drawablePrssedUrl, drawableNonPressedUrl, containerView);
 
         if (currentlySelectedActivities.size() == 0) {
             currentlySelectedActivities.add(activityId);
-            imageView.setImageResource(drawablePrssedId);
+            Picasso.with(imageView.getContext())
+                    .load(drawablePrssedUrl)
+                    .into(imageView);
         }
         return imageView;
     }
@@ -33,22 +36,28 @@ public class SportActivitiesIconContainerManySelected extends SportActivitiesIco
         } else {
             currentlySelectedActivities.add(clickedActivityId);
         }
-        setProperDrawablesForIconsView(currentlySelectedActivities);
+        setProperDrawablesForIconsView();
     }
 
-    protected void setProperDrawablesForIconsView(HashSet<Integer> clickedActivitiesIds) {
-        for (SportActivityDrawables sportActivityDrawables : activitiesDrawables) {
-            if (clickedActivitiesIds.contains(sportActivityDrawables.getActivityId())) {
-                int clickedResource = sportActivityDrawables.getDrawablePressed();
-                sportActivityDrawables.getImageView().setImageResource(clickedResource);
-            } else {
-                int nonClickedResource = sportActivityDrawables.getDrawableNonPressed();
-                sportActivityDrawables.getImageView().setImageResource(nonClickedResource);
-            }
+    protected void setProperDrawablesForIconsView() {
+        for (SportActivityDrawable sportActivityDrawable : activitiesDrawables) {
+            String resourceUrl = getClickedOrNonClickedUrl(
+                    sportActivityDrawable);
+            ImageView imageView = sportActivityDrawable.getImageView();
+
+            Picasso.with(imageView.getContext())
+                    .load(resourceUrl)
+                    .into(imageView);
         }
     }
 
-    public HashSet<Integer> getCurrentlySelectedActivity() {
-        return currentlySelectedActivities;
+    private String getClickedOrNonClickedUrl(SportActivityDrawable sportActivityDrawable) {
+        String resourceUrl;
+        if (currentlySelectedActivities.contains(sportActivityDrawable.getActivityId())) {
+            resourceUrl = sportActivityDrawable.getDrawablePressed();
+        } else {
+            resourceUrl = sportActivityDrawable.getDrawableNonPressed();
+        }
+        return resourceUrl;
     }
 }

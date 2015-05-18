@@ -3,6 +3,8 @@ package com.siemionczyk.inspotle.ui;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.squareup.picasso.Picasso;
+
 /**
  * Created by michalsiemionczyk on 03/10/14.
  */
@@ -11,12 +13,14 @@ public class SportActivitiesIconContainerOneOneSelected extends SportActivitiesI
     private int currentlySelectedActivity = -1;
 
     @Override
-    public ImageView insertActivities(final int activityId, int drawablePrssedId, int drawableNonPressedId, LinearLayout containerView) {
-        ImageView imageView = super.insertActivities(activityId, drawablePrssedId, drawableNonPressedId, containerView);
+    public ImageView insertActivities(final int activityId, String drawablePrssedUrl, String drawableNonPressedUrl, LinearLayout containerView) {
+        ImageView imageView = super.insertActivities(activityId, drawablePrssedUrl, drawableNonPressedUrl, containerView);
 
         if (currentlySelectedActivity == -1) {
             currentlySelectedActivity = activityId;
-            imageView.setImageResource(drawablePrssedId);
+            Picasso.with(imageView.getContext())
+                    .load(drawablePrssedUrl)
+                    .into(imageView);
         }
         return imageView;
     }
@@ -28,18 +32,24 @@ public class SportActivitiesIconContainerOneOneSelected extends SportActivitiesI
     }
 
     protected void setProperDrawablesForIconsView(int clickedActivityId) {
-        for (SportActivityDrawables sportActivityDrawables : activitiesDrawables) {
-            if (sportActivityDrawables.getActivityId() == clickedActivityId) {
-                int clickedResource = sportActivityDrawables.getDrawablePressed();
-                sportActivityDrawables.getImageView().setImageResource(clickedResource);
-            } else {
-                int nonClickedResource = sportActivityDrawables.getDrawableNonPressed();
-                sportActivityDrawables.getImageView().setImageResource(nonClickedResource);
-            }
+        for (SportActivityDrawable sportActivityDrawable : activitiesDrawables) {
+            String resourceUrl = getClickedOrNoClickedDrawableUrl(clickedActivityId, sportActivityDrawable);
+            ImageView imageView = sportActivityDrawable.getImageView();
+            Picasso.with(imageView.getContext())
+                    .load(resourceUrl)
+                    .into(imageView);
+
         }
     }
 
-    public int getCurrentlySelectedActivity() {
-        return currentlySelectedActivity;
+    private String getClickedOrNoClickedDrawableUrl(int clickedActivityId, SportActivityDrawable sportActivityDrawables) {
+        String drawableUrl = "";
+        if (sportActivityDrawables.getActivityId() == clickedActivityId) {
+            drawableUrl = sportActivityDrawables.getDrawablePressed();
+        } else {
+            drawableUrl = sportActivityDrawables.getDrawableNonPressed();
+        }
+        return drawableUrl;
     }
+
 }
