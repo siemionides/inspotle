@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.siemionczyk.inspotle.R;
+import com.siemionczyk.inspotle.model.Activity;
 import com.siemionczyk.inspotle.utils.ViewUtils;
 import com.squareup.picasso.Picasso;
 
@@ -17,22 +18,14 @@ import lombok.Value;
  */
 public abstract class SportActivitiesIconContainer {
 
-    protected HashSet<SportActivityDrawable> activitiesDrawables;
-
-    public SportActivitiesIconContainer() {
-        activitiesDrawables = new HashSet<SportActivityDrawable>();
-    }
-
-
-    public ImageView insertActivities(final int activityId, String drawablePrssedUrl, String drawableNonPressedUrl, LinearLayout containerView) {
-        ImageView imageVIew = insertAndReturnImage(drawableNonPressedUrl, containerView);
+    public ImageView insertActivities(final Activity activity, LinearLayout containerView) {
+        ImageView imageVIew = insertAndReturnImage(activity.getIconNonPressed(), containerView);
         imageVIew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onIconClick(activityId);
+                onIconClick((ImageView) v, activity);
             }
         });
-        activitiesDrawables.add(new SportActivityDrawable(activityId, drawablePrssedUrl, drawableNonPressedUrl, imageVIew));
         return imageVIew;
     }
 
@@ -55,15 +48,20 @@ public abstract class SportActivitiesIconContainer {
         return iv;
     }
 
-    protected abstract void onIconClick(int clickedActivityId);
+    protected abstract void onIconClick(ImageView imageView, Activity clickedActivity);
 
-    @Value
-    protected class SportActivityDrawable {
-        int activityId;
-        String drawablePressed;
-        String drawableNonPressed;
-        ImageView imageView;
+    protected void setProperDrawablesForIconsView(boolean wasSelected, ImageView imageView, Activity activity) {
+        String urlWithDrawable = "";
+        if (wasSelected){
+            urlWithDrawable = activity.getIconPressed();
+            imageView.setBackgroundColor(imageView.getResources().getColor(R.color.button_pressed));
+        } else {
+            urlWithDrawable = activity.getIconNonPressed();
+            imageView.setBackgroundColor(imageView.getResources().getColor(android.R.color.transparent));
+        }
+
+        Picasso.with(imageView.getContext())
+                .load(urlWithDrawable)
+                .into(imageView);
     }
-
-
 }

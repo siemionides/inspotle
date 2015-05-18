@@ -3,6 +3,7 @@ package com.siemionczyk.inspotle.ui;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.siemionczyk.inspotle.model.Activity;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -10,46 +11,25 @@ import com.squareup.picasso.Picasso;
  */
 public class SportActivitiesIconContainerOneOneSelected extends SportActivitiesIconContainer {
 
-    private int currentlySelectedActivity = -1;
+    private int currentlySelectedActivityId = -1;
 
     @Override
-    public ImageView insertActivities(final int activityId, String drawablePrssedUrl, String drawableNonPressedUrl, LinearLayout containerView) {
-        ImageView imageView = super.insertActivities(activityId, drawablePrssedUrl, drawableNonPressedUrl, containerView);
+    public ImageView insertActivities(final Activity activity, LinearLayout containerView) {
+        ImageView imageView = super.insertActivities(activity, containerView);
 
-        if (currentlySelectedActivity == -1) {
-            currentlySelectedActivity = activityId;
+        if (currentlySelectedActivityId == -1) {
+            currentlySelectedActivityId = activity.getId();
             Picasso.with(imageView.getContext())
-                    .load(drawablePrssedUrl)
+                    .load(activity.getIconPressed())
                     .into(imageView);
         }
         return imageView;
     }
 
 
-    protected void onIconClick(int clickedActivityId) {
-        currentlySelectedActivity = clickedActivityId;
-        setProperDrawablesForIconsView(clickedActivityId);
+    protected void onIconClick(ImageView imageView, Activity clickedActivity) {
+        boolean wasSelected = clickedActivity.getId() == currentlySelectedActivityId;
+        currentlySelectedActivityId = clickedActivity.getId();
+        setProperDrawablesForIconsView(wasSelected, imageView, clickedActivity);
     }
-
-    protected void setProperDrawablesForIconsView(int clickedActivityId) {
-        for (SportActivityDrawable sportActivityDrawable : activitiesDrawables) {
-            String resourceUrl = getClickedOrNoClickedDrawableUrl(clickedActivityId, sportActivityDrawable);
-            ImageView imageView = sportActivityDrawable.getImageView();
-            Picasso.with(imageView.getContext())
-                    .load(resourceUrl)
-                    .into(imageView);
-
-        }
-    }
-
-    private String getClickedOrNoClickedDrawableUrl(int clickedActivityId, SportActivityDrawable sportActivityDrawables) {
-        String drawableUrl = "";
-        if (sportActivityDrawables.getActivityId() == clickedActivityId) {
-            drawableUrl = sportActivityDrawables.getDrawablePressed();
-        } else {
-            drawableUrl = sportActivityDrawables.getDrawableNonPressed();
-        }
-        return drawableUrl;
-    }
-
 }

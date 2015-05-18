@@ -13,9 +13,7 @@ import com.siemionczyk.inspotle.api.InspotleApiClient;
 import com.siemionczyk.inspotle.events.ActivitiesResponseEvent;
 import com.siemionczyk.inspotle.events.SpotUpdatedEvent;
 import com.siemionczyk.inspotle.model.Activity;
-import com.siemionczyk.inspotle.model.Spot;
 import com.siemionczyk.inspotle.ui.SportActivitiesIconContainerManySelected;
-import com.siemionczyk.inspotle.utils.ResourcesUtils;
 import com.siemionczyk.inspotle.utils.ViewUtils;
 
 import java.util.List;
@@ -32,7 +30,7 @@ public class AddNewSpotDetailsActivity extends FragmentActivity {
 
     SportActivitiesIconContainerManySelected iconContainer = new SportActivitiesIconContainerManySelected();
 
-    public static void start(Context ctx, LatLng newMarkerPosition){
+    public static void start(Context ctx, LatLng newMarkerPosition) {
         Intent intent = new Intent(ctx, AddNewSpotDetailsActivity.class);
         intent.putExtra(AddNewSpotDetailsActivity.BUNDLE_KEY_NEW_POSITION, newMarkerPosition);
         ctx.startActivity(intent);
@@ -81,9 +79,7 @@ public class AddNewSpotDetailsActivity extends FragmentActivity {
     private void fillActivitiesView(List<Activity> activities) {
         LinearLayout activitiesIconsLayout = ViewUtils.findView(this, R.id.layout_sport_activities);
         for (Activity activity : activities) {
-            String pressedDrawableUrl = activity.getIcon_white_url();
-            String nonPressedDrawableUrl = activity.getIcon_blue_url();
-            iconContainer.insertActivities(activity.getId(), pressedDrawableUrl, nonPressedDrawableUrl, activitiesIconsLayout);
+            iconContainer.insertActivities(activity, activitiesIconsLayout);
         }
     }
 
@@ -114,7 +110,7 @@ public class AddNewSpotDetailsActivity extends FragmentActivity {
         ViewUtils.setText(spot.getShort_description(), this, R.id.ed_description);*/
     }
 
-    private void fillActivitiesIconsAsynchronously(){
+    private void fillActivitiesIconsAsynchronously() {
         InspotleApiClient.getInstance().getActivities();
     }
 }

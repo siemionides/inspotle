@@ -1,7 +1,6 @@
 package com.siemionczyk.inspotle.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,7 +102,7 @@ public class CreateNewGameSpotsAdapter extends BaseAdapter {
 
             ViewUtils.addView(viewHolder.photosLayout, iv);
             Activity activity = spot.getActivities().get(i);
-            Picasso.with(context).load(activity.getIcon_blue_url()).into(iv);
+            Picasso.with(context).load(activity.getIconNonPressed()).into(iv);
         }
     }
 

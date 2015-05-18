@@ -143,7 +143,7 @@ public class ActivitiesFragment extends Fragment {
             String activityName = activity.getName().toUpperCase();
 
             viewHolder.textViewItem.setText(activityName);
-            Picasso.with(context).load(activity.getIcon_blue_url()).into(viewHolder.imageView);
+            Picasso.with(context).load(activity.getIconNonPressed()).into(viewHolder.imageView);
         }
 
 

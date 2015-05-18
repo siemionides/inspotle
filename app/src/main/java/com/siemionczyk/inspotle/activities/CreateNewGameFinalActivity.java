@@ -61,9 +61,7 @@ public class CreateNewGameFinalActivity extends FragmentActivity {
     private void insertImagesForActivities(List<Activity> activities) {
         LinearLayout activitiesIconsLayout = ViewUtils.findView(this, R.id.layout_sport_activities);
         for (Activity activity : activities) {
-            String pressedDrawableUrl = activity.getIcon_white_url();
-            String nonPressedDrawableUrl = activity.getIcon_blue_url();
-            iconContainer.insertActivities(activity.getId(), pressedDrawableUrl, nonPressedDrawableUrl, activitiesIconsLayout);
+            iconContainer.insertActivities(activity, activitiesIconsLayout);
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.siemionczyk.inspotle.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import hrisey.Parcelable;
 import lombok.Value;
 
@@ -12,6 +14,6 @@ public class Activity implements android.os.Parcelable {
 
     int id;
     String name;
-    String icon_white_url;
-    String icon_blue_url;
+    @SerializedName("icon_white_url") String iconPressed;
+    @SerializedName("icon_blue_url") String iconNonPressed;
 }
